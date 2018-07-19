@@ -1,5 +1,6 @@
 const express = require("express")
 const morgan = require("morgan")
+const cors = require("cors")
 //pour accéder aux données de publication nous devons utiliser body-parser
 const bodyParser = require ("body-parser")
 //on invoque db.js pour voir si on est bien connecté à mysql
@@ -7,10 +8,12 @@ const connection = require("./src/helper/db.js")
 //on invoque le fichier movie.js qui correspond à la variable movie
 const movie = require("./src/routes/movie.js")
 
+
 const app = express()
 
 //middleware appliqué à chaque requette
 app.use(morgan("dev"))
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
 //à chaque '/movie' on ira dans le fichier movie.js
