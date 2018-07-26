@@ -34,10 +34,14 @@ Router.post('/addmovie', (req, res) => {
 	//requete sql pour ajouter de la data 
 	const sql = "INSERT INTO movieDetail (Titre, Sortie, Genre, Synopsys, Affiche) VALUES (?,?,?,?,?)"
 	const value = [req.body.Titre, req.body.Sortie, req.body.Genre, req.body.Synopsys, req.body.Affiche ]
-	connection.query(sql, value, (err, result) => {
-		if(err) throw err
-		return res.status(200).send(result)
-	} )
+	connection.query(sql, value)
+    .then(result => {
+      console.log(result)
+      res.status(200).json({ flash:  "Film Ajouter!!" });
+    })
+    .catch(err => {
+      res.status(500).json({ flash:  err.message });
+    })
 } )
 
 Router.put('/updatemovie/:id', (req, res) => {
